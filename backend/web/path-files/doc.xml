@@ -1,0 +1,203 @@
+<?xml version = "1.0" encoding = "UTF-8" standalone = "yes"?>
+<XMI version="1.1" xmlns:JUDE="http://objectclub.esm.co.jp/Jude/namespace/" xmlns:UML="org.omg.namespace.UML">
+  <header>
+    <documentation>
+      <exporter>Jomt XMI writer</exporter>
+      <exporterVersion>1.2.0.37</exporterVersion>
+      <currentModelVersion>37</currentModelVersion>
+      <maxModelVersion>37</maxModelVersion>
+      <currentModelProducer>A.P</currentModelProducer>
+      <sortedVersionHistories>
+        <versionEntry productVersion="Professional 7.1.0" modelVersion="37"/>
+      </sortedVersionHistories>
+    </documentation>
+    <metamodel name="UML" version="1.4"/>
+  </header>
+  <content>
+    <Model id="1-0b7f0721c8ce083da9a69735570555ff" name="DiagramaClasseUnicaSemMetodos" version="0" unSolvedFlag="false" isRoot="true" isLeaf="false" isAbstract="false" xmlns:UML="org.omg.namespace.UML">
+      <extension>
+      </extension>
+      <ModelElement.taggedValue>
+        <TaggedValue id="2-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.profiles" value="%3C%3Fxml+version+%3D+%221.0%22+encoding+%3D+%22UTF-8%22+standalone+%3D+%22yes%22%3F%3E%0D%0A%3CumlProfiles%3E%0D%0A+%3CumlProfile%3E%0D%0A++%3Cname%3Ejude.profiles%3C%2Fname%3E%0D%0A+%3C%2FumlProfile%3E%0D%0A%3C%2FumlProfiles%3E%0D%0A%0D%0A">
+          <TaggedValue.modelElement>
+            <ModelElement idref="1-0b7f0721c8ce083da9a69735570555ff"/>
+          </TaggedValue.modelElement>
+        </TaggedValue>
+        <TaggedValue id="3-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.usericons" value="%3C%3Fxml+version+%3D+%221.0%22+encoding+%3D+%22UTF-8%22+standalone+%3D+%22yes%22%3F%3E%0D%0A%3CmmUserIcon%3E%0D%0A+%3CmmUserIconInfo%3E%0D%0A++%3Cname%3Ejude.usericons%3C%2Fname%3E%0D%0A+%3C%2FmmUserIconInfo%3E%0D%0A%3C%2FmmUserIcon%3E%0D%0A%0D%0A">
+          <TaggedValue.modelElement>
+            <ModelElement idref="1-0b7f0721c8ce083da9a69735570555ff"/>
+          </TaggedValue.modelElement>
+        </TaggedValue>
+      </ModelElement.taggedValue>
+      <Namespace.ownedElement>
+        <Class id="21-0b7f0721c8ce083da9a69735570555ff" name="Pessoa" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+          <ModelElement.namespace>
+            <Namespace idref="1-0b7f0721c8ce083da9a69735570555ff"/>
+          </ModelElement.namespace>
+          <ModelElement.visibility value="public"/>
+          <Namespace.ownedElement></Namespace.ownedElement>
+          <Classifier.feature>
+            <Attribute id="ge-0b7f0721c8ce083da9a69735570555ff" name="nome" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <ModelElement.namespace>
+                <Namespace idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </ModelElement.namespace>
+              <ModelElement.visibility value="private"/>
+              <ModelElement.taggedValue>
+                <TaggedValue id="kx-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.type_modifier">
+                  <TaggedValue.modelElement>
+                    <ModelElement idref="ge-0b7f0721c8ce083da9a69735570555ff"/>
+                  </TaggedValue.modelElement>
+                </TaggedValue>
+              </ModelElement.taggedValue>
+              <Feature.owner>
+                <Classifier idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </Feature.owner>
+              <Feature.visibility value="private"/>
+              <StructuralFeature.type>
+                <Classifier idref="yk-0b7f0721c8ce083da9a69735570555ff"/>
+              </StructuralFeature.type>
+            </Attribute>
+            <Attribute id="17d-0b7f0721c8ce083da9a69735570555ff" name="cpf" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <ModelElement.namespace>
+                <Namespace idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </ModelElement.namespace>
+              <ModelElement.visibility value="private"/>
+              <ModelElement.taggedValue>
+                <TaggedValue id="1ct-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.type_modifier">
+                  <TaggedValue.modelElement>
+                    <ModelElement idref="17d-0b7f0721c8ce083da9a69735570555ff"/>
+                  </TaggedValue.modelElement>
+                </TaggedValue>
+              </ModelElement.taggedValue>
+              <Feature.owner>
+                <Classifier idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </Feature.owner>
+              <Feature.visibility value="private"/>
+              <StructuralFeature.type>
+                <Classifier idref="yk-0b7f0721c8ce083da9a69735570555ff"/>
+              </StructuralFeature.type>
+            </Attribute>
+            <Attribute id="1mn-0b7f0721c8ce083da9a69735570555ff" name="dataNasc" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <ModelElement.namespace>
+                <Namespace idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </ModelElement.namespace>
+              <ModelElement.visibility value="private"/>
+              <ModelElement.taggedValue>
+                <TaggedValue id="1sp-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.type_modifier">
+                  <TaggedValue.modelElement>
+                    <ModelElement idref="1mn-0b7f0721c8ce083da9a69735570555ff"/>
+                  </TaggedValue.modelElement>
+                </TaggedValue>
+              </ModelElement.taggedValue>
+              <Feature.owner>
+                <Classifier idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </Feature.owner>
+              <Feature.visibility value="private"/>
+              <StructuralFeature.type>
+                <Classifier idref="1zp-0b7f0721c8ce083da9a69735570555ff"/>
+              </StructuralFeature.type>
+            </Attribute>
+            <Attribute id="2q0-0b7f0721c8ce083da9a69735570555ff" name="sexo" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <ModelElement.namespace>
+                <Namespace idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </ModelElement.namespace>
+              <ModelElement.visibility value="private"/>
+              <ModelElement.taggedValue>
+                <TaggedValue id="2wo-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.type_modifier">
+                  <TaggedValue.modelElement>
+                    <ModelElement idref="2q0-0b7f0721c8ce083da9a69735570555ff"/>
+                  </TaggedValue.modelElement>
+                </TaggedValue>
+              </ModelElement.taggedValue>
+              <Feature.owner>
+                <Classifier idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </Feature.owner>
+              <Feature.visibility value="private"/>
+              <StructuralFeature.type>
+                <Classifier idref="fc-0b7f0721c8ce083da9a69735570555ff"/>
+              </StructuralFeature.type>
+            </Attribute>
+            <Attribute id="38o-0b7f0721c8ce083da9a69735570555ff" name="peso" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <ModelElement.namespace>
+                <Namespace idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </ModelElement.namespace>
+              <ModelElement.visibility value="private"/>
+              <ModelElement.taggedValue>
+                <TaggedValue id="3g4-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.type_modifier">
+                  <TaggedValue.modelElement>
+                    <ModelElement idref="38o-0b7f0721c8ce083da9a69735570555ff"/>
+                  </TaggedValue.modelElement>
+                </TaggedValue>
+              </ModelElement.taggedValue>
+              <Feature.owner>
+                <Classifier idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </Feature.owner>
+              <Feature.visibility value="private"/>
+              <StructuralFeature.type>
+                <Classifier idref="fd-0b7f0721c8ce083da9a69735570555ff"/>
+              </StructuralFeature.type>
+            </Attribute>
+            <Attribute id="3rv-0b7f0721c8ce083da9a69735570555ff" name="altura" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <ModelElement.namespace>
+                <Namespace idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </ModelElement.namespace>
+              <ModelElement.visibility value="private"/>
+              <ModelElement.taggedValue>
+                <TaggedValue id="3zz-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.type_modifier">
+                  <TaggedValue.modelElement>
+                    <ModelElement idref="3rv-0b7f0721c8ce083da9a69735570555ff"/>
+                  </TaggedValue.modelElement>
+                </TaggedValue>
+              </ModelElement.taggedValue>
+              <Feature.owner>
+                <Classifier idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </Feature.owner>
+              <Feature.visibility value="private"/>
+              <StructuralFeature.type>
+                <Classifier idref="fd-0b7f0721c8ce083da9a69735570555ff"/>
+              </StructuralFeature.type>
+            </Attribute>
+            <Attribute id="4cx-0b7f0721c8ce083da9a69735570555ff" name="numDependentes" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <ModelElement.namespace>
+                <Namespace idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </ModelElement.namespace>
+              <ModelElement.visibility value="private"/>
+              <ModelElement.taggedValue>
+                <TaggedValue id="4ll-0b7f0721c8ce083da9a69735570555ff" version="0" tag="jude.type_modifier">
+                  <TaggedValue.modelElement>
+                    <ModelElement idref="4cx-0b7f0721c8ce083da9a69735570555ff"/>
+                  </TaggedValue.modelElement>
+                </TaggedValue>
+              </ModelElement.taggedValue>
+              <Feature.owner>
+                <Classifier idref="21-0b7f0721c8ce083da9a69735570555ff"/>
+              </Feature.owner>
+              <Feature.visibility value="private"/>
+              <StructuralFeature.type>
+                <Classifier idref="ff-0b7f0721c8ce083da9a69735570555ff"/>
+              </StructuralFeature.type>
+            </Attribute>
+          </Classifier.feature>
+        </Class>
+        <Class id="yk-0b7f0721c8ce083da9a69735570555ff" name="String" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+          <ModelElement.namespace>
+            <Namespace idref="1-0b7f0721c8ce083da9a69735570555ff"/>
+          </ModelElement.namespace>
+          <ModelElement.visibility value="public"/>
+        </Class>
+        <Class id="1zp-0b7f0721c8ce083da9a69735570555ff" name="Date" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false">
+          <ModelElement.namespace>
+            <Namespace idref="1-0b7f0721c8ce083da9a69735570555ff"/>
+          </ModelElement.namespace>
+          <ModelElement.visibility value="public"/>
+        </Class>
+      </Namespace.ownedElement>
+    </Model>
+    <Primitive id="fc-0b7f0721c8ce083da9a69735570555ff" name="char" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"></Primitive>
+    <Primitive id="fd-0b7f0721c8ce083da9a69735570555ff" name="double" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"></Primitive>
+    <Primitive id="ff-0b7f0721c8ce083da9a69735570555ff" name="int" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"></Primitive>
+    <extension></extension>
+    <extension>
+    </extension>
+  </content>
+</XMI>
