@@ -7,6 +7,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use backend\models\UploadForm;
+use backend\models\MappingObject;
 use backend\helps\ListMappingAttributes;
 use yii\web\UploadedFile;
 use SimpleXMLElement;
@@ -85,25 +86,29 @@ class ConstructorController extends Controller
 
     public function actionReader()
     {
-
       $list = require(__DIR__ . '/../helps/ListMappingAttributes.php');
 
       $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
       foreach ($list as $key => $value) {
         $current = str_replace($key,$value, $current);
-        echo "$key => $value<br>";
+        //echo "$key => $value<br>";
         //print_r($value);
       }
       $content = 'content';
       // $ex = 'extension';
       //$xml = simplexml_load_string($current);
       $xmlObject = new SimpleXMLElement($current);
+
+      $mappingObject = new MappingObject();
+      $mappingObject->setXmlObject($xmlObject);
       echo "<pre>";
-      print_r($xmlObject);
+      print_r($mappingObject->getClassName());
+      // echo $mappingObject->getClassName()[2];
+    //  print_r($xmlObject);
       // print_r($xmlObject->${'content'});
-      foreach ($xmlObject as $value) {
-        print_r($value);
-      }
+      // foreach ($xmlObject as $value) {
+      //   print_r($value);
+      // }
 
     }
 
