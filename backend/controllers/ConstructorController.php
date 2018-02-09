@@ -9,6 +9,7 @@ use common\models\LoginForm;
 use backend\models\UploadForm;
 use backend\models\MappingObject;
 use backend\models\Type;
+use backend\models\ListType;
 use backend\helps\ListMappingAttributes;
 use yii\web\UploadedFile;
 use SimpleXMLElement;
@@ -106,11 +107,14 @@ class ConstructorController extends Controller
 
       $types = $mappingObject->getNativeTypes();
       foreach ($types as $typeItem) {
-        $listTypes["{$typeItem->attributes()->id}"] = new Type($typeItem->attributes()->id, $typeItem->attributes()->name);
+        ListType::setType( new Type($typeItem->attributes()->id, $typeItem->attributes()->name));
       }
       echo "<pre>";
 
-      var_dump($listTypes['fc-0b7f0721c8ce083da9a69735570555ff']->id);
+      var_dump(ListType::getType('fc-0b7f0721c8ce083da9a69735570555ff')->getId());
+      var_dump(ListType::list());
+      ListType::clearAll();
+      var_dump(ListType::list());
       // echo $mappingObject->getClassName()[2];
       //  print_r($xmlObject);
       // print_r($xmlObject->${'content'});
