@@ -7,7 +7,7 @@ class MappingObject {
 
   private $xmlObject;
 
-  public function MappingObject($xmlObject = null) {
+  public function __construct($xmlObject = null) {
       $this->xmlObject = $xmlObject;
   }
 
@@ -24,10 +24,20 @@ class MappingObject {
      $classes = [];
      $it = $this->xmlObject->content->Model->namespaceOwnedElement->Class;
      foreach ($it as $value) {
-       $classes[] = $value->attributes();
+       $classes[] = $value->attributes()->name;
      }
      return $classes;
   }
+
+  public function getNativeTypes() {
+     $classes = [];
+     $it = $this->xmlObject->content->Primitive;
+     foreach ($it as $value) {
+       $classes[] = $value;//->attributes()->name;
+     }
+     return $classes;
+  }
+
 
   // gettes e settes
 
@@ -35,7 +45,7 @@ class MappingObject {
       $this->xmlObject = $xmlObject;
   }
 
-  public function getXmlObject($xmlObject) {
+  public function getXmlObject() {
       $this->xmlObject;
   }
   // $className;

@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use common\models\LoginForm;
 use backend\models\UploadForm;
 use backend\models\MappingObject;
+use backend\models\Type;
 use backend\helps\ListMappingAttributes;
 use yii\web\UploadedFile;
 use SimpleXMLElement;
@@ -86,6 +87,7 @@ class ConstructorController extends Controller
 
     public function actionReader()
     {
+      $listTypes = [];
       $list = require(__DIR__ . '/../helps/ListMappingAttributes.php');
 
       $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
@@ -101,10 +103,16 @@ class ConstructorController extends Controller
 
       $mappingObject = new MappingObject();
       $mappingObject->setXmlObject($xmlObject);
+
+      $types = $mappingObject->getNativeTypes();
+      foreach ($types as $typeItem) {
+        $listTypes["{$typeItem->attributes()->id}"] = new Type($typeItem->attributes()->id, $typeItem->attributes()->name);
+      }
       echo "<pre>";
-      print_r($mappingObject->getClassName());
+
+      var_dump($listTypes['fc-0b7f0721c8ce083da9a69735570555ff']->id);
       // echo $mappingObject->getClassName()[2];
-    //  print_r($xmlObject);
+      //  print_r($xmlObject);
       // print_r($xmlObject->${'content'});
       // foreach ($xmlObject as $value) {
       //   print_r($value);
