@@ -89,9 +89,13 @@ class ConstructorController extends Controller
     public function actionReader()
     {
       $listTypes = [];
+      $removeList = require(__DIR__ . '/../helps/RemoveList.php');
       $list = require(__DIR__ . '/../helps/ListMappingAttributes.php');
 
       $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
+      foreach ($removeList as $key => $value) {
+        $current = str_replace($key,$value, $current);
+      }
       foreach ($list as $key => $value) {
         $current = str_replace($key,$value, $current);
         //echo "$key => $value<br>";
@@ -109,12 +113,13 @@ class ConstructorController extends Controller
       foreach ($types as $typeItem) {
         ListType::setType( new Type($typeItem->attributes()->id, $typeItem->attributes()->name));
       }
+      $classes= $mappingObject->getClasses();
+      foreach ($classes as $classeItem) {
+        ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
+      }
       echo "<pre>";
-
-      var_dump(ListType::getType('fc-0b7f0721c8ce083da9a69735570555ff')->getId());
-      var_dump(ListType::list());
-      ListType::clearAll();
-      var_dump(ListType::list());
+      print_r(ListType::getType('fc-0b7f0721c8ce083da9a69735570555ff'));
+      print_r(ListType::list());
       // echo $mappingObject->getClassName()[2];
       //  print_r($xmlObject);
       // print_r($xmlObject->${'content'});

@@ -24,7 +24,7 @@ class MappingObject {
      $classes = [];
      $it = $this->xmlObject->content->Model->namespaceOwnedElement->Class;
      foreach ($it as $value) {
-       $classes[] = $value->attributes()->name;
+       $classes[] = $value;
      }
      return $classes;
   }
@@ -33,7 +33,7 @@ class MappingObject {
      $classes = [];
      $it = $this->xmlObject->content->Primitive;
      foreach ($it as $value) {
-       $classes[] = $value;//->attributes()->name;
+       $classes[] = $value;
      }
      return $classes;
   }
