@@ -88,24 +88,13 @@ class ConstructorController extends Controller
 
     public function actionReader()
     {
-      $listTypes = [];
-      $removeList = require(__DIR__ . '/../helps/RemoveList.php');
-      $list = require(__DIR__ . '/../helps/ListMappingAttributes.php');
-
       $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
-      foreach ($removeList as $key => $value) {
-        $current = str_replace($key,$value, $current);
-      }
-      foreach ($list as $key => $value) {
-        $current = str_replace($key,$value, $current);
-        //echo "$key => $value<br>";
-        //print_r($value);
-      }
-      $content = 'content';
-      // $ex = 'extension';
-      //$xml = simplexml_load_string($current);
-      $xmlObject = new SimpleXMLElement($current);
+      // remove Prefixes desnecessary
+      $current = $this->removeList($current);
+      // convert key expressions
+      $current = $this->convertebleList($current);
 
+      $xmlObject = new SimpleXMLElement($current);
       $mappingObject = new MappingObject();
       $mappingObject->setXmlObject($xmlObject);
 
@@ -113,6 +102,7 @@ class ConstructorController extends Controller
       foreach ($types as $typeItem) {
         ListType::setType( new Type($typeItem->attributes()->id, $typeItem->attributes()->name));
       }
+
       $classes= $mappingObject->getClasses();
       foreach ($classes as $classeItem) {
         ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
@@ -129,17 +119,20 @@ class ConstructorController extends Controller
 
     }
 
-    public function parse(Response $response)
-    {
-        $contentType = $response->getHeaders()->get('content-type', '');
-        if (preg_match('/charset=(.*)/i', $contentType, $matches)) {
-            $encoding = $matches[1];
-        } else {
-            $encoding = 'UTF-8';
-        }
-        $dom = new \DOMDocument('1.0', $encoding);
-        $dom->loadXML($response->getContent(), LIBXML_NOCDATA);
-        return $this->convertXmlToArray(simplexml_import_dom($dom->documentElement));
+    private function removeList($current) {
+      $removeList = require(__DIR__ . '/../helps/RemoveList.php');
+      foreach ($removeList as $key => $value) {
+        $current = str_replace($key, $value, $current);
+      }
+      return $current;
+    }
+
+    private function convertebleList($current) {
+      $removeList = require(__DIR__ . '/../helps/ListMappingAttributes.php');
+      foreach ($removeList as $key => $value) {
+        $current = str_replace($key, $value, $current);
+      }
+      return $current;
     }
 
 
