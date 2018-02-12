@@ -337,12 +337,56 @@
             <UML:Namespace xmi.idref="1-0b7f0721c8ce083da9a69735570555ff"/>
           </UML:ModelElement.namespace>
           <UML:ModelElement.visibility xmi.value="public"/>
+          <UML:Namespace.ownedElement></UML:Namespace.ownedElement>
+          <UML:Classifier.feature>
+            <UML:Attribute xmi.id="gg-942330e6ca7b192f284db2bec1ba1d8b" name="nome" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <UML:ModelElement.namespace>
+                <UML:Namespace xmi.idref="18k-bc5fc2d3024363d4a62ffc1e22a2a424"/>
+              </UML:ModelElement.namespace>
+              <UML:ModelElement.visibility xmi.value="private"/>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id="l7-942330e6ca7b192f284db2bec1ba1d8b" version="0" tag="jude.type_modifier">
+                  <UML:TaggedValue.modelElement>
+                    <UML:ModelElement xmi.idref="gg-942330e6ca7b192f284db2bec1ba1d8b"/>
+                  </UML:TaggedValue.modelElement>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
+              <UML:Feature.owner>
+                <UML:Classifier xmi.idref="18k-bc5fc2d3024363d4a62ffc1e22a2a424"/>
+              </UML:Feature.owner>
+              <UML:Feature.visibility xmi.value="private"/>
+              <UML:StructuralFeature.type>
+                <UML:Classifier xmi.idref="yk-0b7f0721c8ce083da9a69735570555ff"/>
+              </UML:StructuralFeature.type>
+            </UML:Attribute>
+            <UML:Attribute xmi.id="u4-942330e6ca7b192f284db2bec1ba1d8b" name="lotacaoMax" version="0" unSolvedFlag="false" ownerScope="instance" targetScope="instance" changeability="changeable" aggregation="composite">
+              <UML:ModelElement.namespace>
+                <UML:Namespace xmi.idref="18k-bc5fc2d3024363d4a62ffc1e22a2a424"/>
+              </UML:ModelElement.namespace>
+              <UML:ModelElement.visibility xmi.value="private"/>
+              <UML:ModelElement.taggedValue>
+                <UML:TaggedValue xmi.id="zq-942330e6ca7b192f284db2bec1ba1d8b" version="0" tag="jude.type_modifier">
+                  <UML:TaggedValue.modelElement>
+                    <UML:ModelElement xmi.idref="u4-942330e6ca7b192f284db2bec1ba1d8b"/>
+                  </UML:TaggedValue.modelElement>
+                </UML:TaggedValue>
+              </UML:ModelElement.taggedValue>
+              <UML:Feature.owner>
+                <UML:Classifier xmi.idref="18k-bc5fc2d3024363d4a62ffc1e22a2a424"/>
+              </UML:Feature.owner>
+              <UML:Feature.visibility xmi.value="private"/>
+              <UML:StructuralFeature.type>
+                <UML:Classifier xmi.idref="9-942330e6ca7b192f284db2bec1ba1d8b"/>
+              </UML:StructuralFeature.type>
+            </UML:Attribute>
+          </UML:Classifier.feature>
         </UML:Class>
       </UML:Namespace.ownedElement>
     </UML:Model>
     <UML:Primitive xmi.id="fc-0b7f0721c8ce083da9a69735570555ff" name="char" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"></UML:Primitive>
     <UML:Primitive xmi.id="fd-0b7f0721c8ce083da9a69735570555ff" name="double" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"></UML:Primitive>
     <UML:Primitive xmi.id="ff-0b7f0721c8ce083da9a69735570555ff" name="int" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"></UML:Primitive>
+    <UML:Primitive xmi.id="9-942330e6ca7b192f284db2bec1ba1d8b" name="int" version="0" unSolvedFlag="false" isRoot="false" isLeaf="false" isAbstract="false" isActive="false"></UML:Primitive>
     <XMI.extension></XMI.extension>
     <XMI.extension>
       <JUDE:Diagram xmi.id="4-0b7f0721c8ce083da9a69735570555ff" name="Class Diagram0" typeInfo="Class Diagram" version="0" xmlns:JUDE="http://objectclub.esm.co.jp/Jude/namespace/">
@@ -394,7 +438,7 @@
               <XMI.field>57.0</XMI.field>
             </JUDE:JomtPresentation.location>
           </JUDE:ClassifierPresentation>
-          <JUDE:ClassifierPresentation xmi.id="18j-bc5fc2d3024363d4a62ffc1e22a2a424" version="0" depth="2147483634" stereotypeVisibility="true" constraintVisibility="true" notationType="0" width="52.0" height="41.1328125" doAutoResize="true" visibility="true" label="Setor" isActive="false" allAttributeVisibility="true" allOperationVisibility="true" visibilityKindVisibility="true" attributeTypeVisibility="true" parameterVisibility="true" parameterTypeVisibility="true" returnTypeVisibility="true" isClassNameItalic="false" attributeInitValueVisibility="true" pathVisibility="0" attributeStereotypeVisibility="true" operationStereotypeVisibility="true" attributeConstraintVisibility="true" operationConstraintVisibility="true" publicAttributeVisibility="true" protectedAttributeVisibility="true" packageAttributeVisibility="true" privateAttributeVisibility="true" publicOperationVisibility="true" protectedOperationVisibility="true" packageOperationVisibility="true" privateOperationVisibility="true" classType="0" interfaceType="0" nameVisibility="true" templateParameterVisibility="true" templateParameterMultiline="false" boundClassTemplateParameterNameVisibility="false" boundClassTemplateParameterVisibility="true">
+          <JUDE:ClassifierPresentation xmi.id="18j-bc5fc2d3024363d4a62ffc1e22a2a424" version="0" depth="2147483634" stereotypeVisibility="true" constraintVisibility="true" notationType="0" width="122.0" height="69.3984375" doAutoResize="true" visibility="true" label="Setor" isActive="false" allAttributeVisibility="true" allOperationVisibility="true" visibilityKindVisibility="true" attributeTypeVisibility="true" parameterVisibility="true" parameterTypeVisibility="true" returnTypeVisibility="true" isClassNameItalic="false" attributeInitValueVisibility="true" pathVisibility="0" attributeStereotypeVisibility="true" operationStereotypeVisibility="true" attributeConstraintVisibility="true" operationConstraintVisibility="true" publicAttributeVisibility="true" protectedAttributeVisibility="true" packageAttributeVisibility="true" privateAttributeVisibility="true" publicOperationVisibility="true" protectedOperationVisibility="true" packageOperationVisibility="true" privateOperationVisibility="true" classType="0" interfaceType="0" nameVisibility="true" templateParameterVisibility="true" templateParameterMultiline="false" boundClassTemplateParameterNameVisibility="false" boundClassTemplateParameterVisibility="true">
             <JUDE:UPresentation.semanticModel>
               <UML:Class xmi.idref="18k-bc5fc2d3024363d4a62ffc1e22a2a424"/>
             </JUDE:UPresentation.semanticModel>

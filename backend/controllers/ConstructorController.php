@@ -108,8 +108,11 @@ class ConstructorController extends Controller
         ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
       }
       echo "<pre>";
-      print_r(ListType::getType('fc-0b7f0721c8ce083da9a69735570555ff'));
-      print_r(ListType::list());
+      $lc = $mappingObject->getStructureClasses();
+
+      // print_r($classes);
+      print_r($lc);
+      // print_r(ListType::list());
       // echo $mappingObject->getClassName()[2];
       //  print_r($xmlObject);
       // print_r($xmlObject->${'content'});
