@@ -10,7 +10,9 @@ use backend\models\UploadForm;
 use backend\models\MappingObject;
 use backend\models\Type;
 use backend\models\ListType;
-use backend\helps\ListMappingAttributes;
+use backend\helpers\ListMappingAttributes;
+use backend\helpers\HelpersFunction;
+use backend\modules\generator\migrate\GeneratorMigrate;
 use yii\web\UploadedFile;
 use SimpleXMLElement;
 
@@ -33,7 +35,7 @@ class ConstructorController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'form', 'reader'],
+                        'actions' => ['logout', 'index', 'form', 'reader', 'movefile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -123,7 +125,7 @@ class ConstructorController extends Controller
     }
 
     private function removeList($current) {
-      $removeList = require(__DIR__ . '/../helps/RemoveList.php');
+      $removeList = require(__DIR__ . '/../helpers/RemoveList.php');
       foreach ($removeList as $key => $value) {
         $current = str_replace($key, $value, $current);
       }
@@ -131,7 +133,7 @@ class ConstructorController extends Controller
     }
 
     private function convertebleList($current) {
-      $removeList = require(__DIR__ . '/../helps/ListMappingAttributes.php');
+      $removeList = require(__DIR__ . '/../helpers/ListMappingAttributes.php');
       foreach ($removeList as $key => $value) {
         $current = str_replace($key, $value, $current);
       }
@@ -156,6 +158,14 @@ class ConstructorController extends Controller
             }
         }
         return $result;
+    }
+
+    public function actionMovefile(){
+
+      $nameFile = GeneratorMigrate::createMigration('create_table','TEST');
+      GeneratorMigrate::setClassName($nameFile, GeneratorMigrate::getOutputPath().$nameFile);
+      GeneratorMigrate::setTableName('TEST', GeneratorMigrate::getOutputPath().$nameFile);
+      echo $nameFile;
     }
 
 }
