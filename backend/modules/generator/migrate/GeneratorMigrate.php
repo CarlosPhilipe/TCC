@@ -19,7 +19,7 @@ class GeneratorMigrate {
       }
     }
 
-    public static function setClassName($className, $inputPath){
+    public static function setClassName($className, $inputPath) {
         $text = implode('', file($inputPath.'.php'));
         $text = str_replace('CLASS_NAME', $className, $text);
         $file = fopen($inputPath.'.php', 'w');
@@ -27,12 +27,27 @@ class GeneratorMigrate {
         fclose($file);
     }
 
-    public static function setTableName($tableName, $inputPath){
+    public static function setTableName($tableName, $inputPath) {
         $text = implode('', file($inputPath.'.php'));
         $text = str_replace('TABLE_NAME', "'$tableName'", $text);
         $file = fopen($inputPath.'.php', 'w');
         fwrite($file, $text);
         fclose($file);
+    }
+
+    public static function setContent($class, $inputPath) {
+      $content = '';
+      if (isset($class['attributes'])) {
+          $ats = $class['attributes'];
+          foreach ($ats as $attribute) {
+            $content .= "'{$attribute['name']}' => Schema::TYPE_TEXT,\n";
+          }
+      }
+      $text = implode('', file($inputPath.'.php'));
+      $text = str_replace('CONTENT', $content, $text);
+      $file = fopen($inputPath.'.php', 'w');
+      fwrite($file, $text);
+      fclose($file);
     }
 
     public static function getCorrentTime() {

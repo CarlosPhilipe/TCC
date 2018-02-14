@@ -111,17 +111,20 @@ class ConstructorController extends Controller
       }
       echo "<pre>";
       $lc = $mappingObject->getStructureClasses();
-
-      // print_r($classes);
-      print_r($lc);
-      // print_r(ListType::list());
-      // echo $mappingObject->getClassName()[2];
-      //  print_r($xmlObject);
-      // print_r($xmlObject->${'content'});
-      // foreach ($xmlObject as $value) {
-      //   print_r($value);
+      // foreach ($lc as $key => $value) {
+      //   print_r($value['name']);
+      //   $ats = $value['attributes'];
+      //   foreach ($ats as $attribute) {
+      //     print_r($attribute);
+      //   }
       // }
 
+      foreach ($lc as $key => $value) {
+        $nameFile = GeneratorMigrate::createMigration('create_table',$value['name']);
+        GeneratorMigrate::setClassName($nameFile, GeneratorMigrate::getOutputPath().$nameFile);
+        GeneratorMigrate::setTableName($value['name'], GeneratorMigrate::getOutputPath().$nameFile);
+        GeneratorMigrate::setContent($value, GeneratorMigrate::getOutputPath().$nameFile);
+      }
     }
 
     private function removeList($current) {
@@ -161,10 +164,6 @@ class ConstructorController extends Controller
     }
 
     public function actionMovefile(){
-
-      $nameFile = GeneratorMigrate::createMigration('create_table','TEST');
-      GeneratorMigrate::setClassName($nameFile, GeneratorMigrate::getOutputPath().$nameFile);
-      GeneratorMigrate::setTableName('TEST', GeneratorMigrate::getOutputPath().$nameFile);
       echo $nameFile;
     }
 

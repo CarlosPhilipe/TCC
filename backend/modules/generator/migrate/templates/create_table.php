@@ -9,8 +9,7 @@ class CLASS_NAME extends Migration
     {
         $this->createTable(TABLE_NAME, [
             'id' => Schema::TYPE_PK,
-            'title' => Schema::TYPE_STRING . ' NOT NULL',
-            'content' => Schema::TYPE_TEXT,
+             CONTENT
         ]);
     }
 
