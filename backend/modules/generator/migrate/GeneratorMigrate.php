@@ -1,11 +1,17 @@
 <?php
 namespace backend\modules\generator\migrate;
 
+use backend\helpers\HelpersFunctions;
+
 class GeneratorMigrate {
+
+    const TAB = '   ';
 
     public static function createMigration($type, $name) {
         $inputPath = __DIR__."/templates/$type.php"; // pasta de origem
-        // $pastaD =  __DIR__."/../../../console/migrations/"; // pasta de destino // arquivo
+
+        $name = HelpersFunctions::formateNameCamelCaseToDown($name);
+
         $className = 'm'.GeneratorMigrate::getCorrentTime().'_'.$name;
         $pathName = GeneratorMigrate::getOutputPath().$className.'.php';
         try {
@@ -28,6 +34,7 @@ class GeneratorMigrate {
     }
 
     public static function setTableName($tableName, $inputPath) {
+        $tableName = HelpersFunctions::formateNameCamelCaseToDown($tableName);
         $text = implode('', file($inputPath.'.php'));
         $text = str_replace('TABLE_NAME', "'$tableName'", $text);
         $file = fopen($inputPath.'.php', 'w');
@@ -36,11 +43,13 @@ class GeneratorMigrate {
     }
 
     public static function setContent($class, $inputPath) {
+      $TAB = GeneratorMigrate::TAB;
       $content = '';
       if (isset($class['attributes'])) {
           $ats = $class['attributes'];
           foreach ($ats as $attribute) {
-            $content .= "'{$attribute['name']}' => Schema::TYPE_TEXT,\n";
+            $attribute['name'] = HelpersFunctions::formateNameCamelCaseToDown($attribute['name']);
+            $content .= "\n$TAB$TAB$TAB$TAB'{$attribute['name']}' => Schema::TYPE_TEXT,";
           }
       }
       $text = implode('', file($inputPath.'.php'));

@@ -8,8 +8,7 @@ class CLASS_NAME extends Migration
     public function up()
     {
         $this->createTable(TABLE_NAME, [
-            'id' => Schema::TYPE_PK,
-             CONTENT
+            'id' => Schema::TYPE_PK,CONTENT
         ]);
     }
 

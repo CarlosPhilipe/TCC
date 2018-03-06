@@ -10,7 +10,6 @@ use backend\models\UploadForm;
 use backend\models\MappingObject;
 use backend\models\Type;
 use backend\models\ListType;
-use backend\helpers\ListMappingAttributes;
 use backend\helpers\HelpersFunction;
 use backend\modules\generator\migrate\GeneratorMigrate;
 use yii\web\UploadedFile;
