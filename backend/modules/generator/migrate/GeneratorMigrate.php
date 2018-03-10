@@ -10,6 +10,19 @@ class GeneratorMigrate {
     const CONTENT = '{CONTENT}';
     const TABLE_NAME = '{TABLE_NAME}';
 
+
+    public static function generateMigrations($classes) {
+      foreach ($classes as $key => $value) {
+        if (!HelpersFunctions::verifyIfNameIsNativeType($value['name'])) {
+          $nameFile = GeneratorMigrate::createMigration('create_table',$value['name']);
+          GeneratorMigrate::setClassName($nameFile, GeneratorMigrate::getOutputPath().$nameFile);
+          GeneratorMigrate::setTableName($value['name'], GeneratorMigrate::getOutputPath().$nameFile);
+          GeneratorMigrate::setContent($value, GeneratorMigrate::getOutputPath().$nameFile);
+        }
+      }
+    }
+
+
     public static function createMigration($type, $name) {
         $inputPath = __DIR__."/templates/$type.php";
 
