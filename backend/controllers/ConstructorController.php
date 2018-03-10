@@ -1,18 +1,19 @@
 <?php
 namespace backend\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
-use common\models\LoginForm;
-use backend\models\UploadForm;
+use backend\helpers\HelpersFunctions;
+use backend\models\ListType;
 use backend\models\MappingObject;
 use backend\models\Type;
-use backend\models\ListType;
-use backend\helps\ListMappingAttributes;
-use yii\web\UploadedFile;
+use backend\models\UploadForm;
+use backend\modules\generator\migrate\GeneratorMigrate;
+use common\models\LoginForm;
 use SimpleXMLElement;
+use Yii;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\web\Controller;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -33,7 +34,7 @@ class ConstructorController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'form', 'reader'],
+                        'actions' => ['logout', 'index', 'form', 'reader', 'movefile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -86,13 +87,14 @@ class ConstructorController extends Controller
         return $this->render('form', ['model' => $model]);
     }
 
+
     public function actionReader()
     {
       $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
       // remove Prefixes desnecessary
-      $current = $this->removeList($current);
+      $current = HelpersFunctions::removeList($current);
       // convert key expressions
-      $current = $this->convertebleList($current);
+      $current = HelpersFunctions::convertebleList($current);
 
       $xmlObject = new SimpleXMLElement($current);
       $mappingObject = new MappingObject();
@@ -110,52 +112,17 @@ class ConstructorController extends Controller
       echo "<pre>";
       $lc = $mappingObject->getStructureClasses();
 
-      // print_r($classes);
-      print_r($lc);
-      // print_r(ListType::list());
-      // echo $mappingObject->getClassName()[2];
-      //  print_r($xmlObject);
-      // print_r($xmlObject->${'content'});
-      // foreach ($xmlObject as $value) {
-      //   print_r($value);
-      // }
-
-    }
-
-    private function removeList($current) {
-      $removeList = require(__DIR__ . '/../helps/RemoveList.php');
-      foreach ($removeList as $key => $value) {
-        $current = str_replace($key, $value, $current);
+      foreach ($lc as $key => $value) {
+        $nameFile = GeneratorMigrate::createMigration('create_table',$value['name']);
+        GeneratorMigrate::setClassName($nameFile, GeneratorMigrate::getOutputPath().$nameFile);
+        GeneratorMigrate::setTableName($value['name'], GeneratorMigrate::getOutputPath().$nameFile);
+        GeneratorMigrate::setContent($value, GeneratorMigrate::getOutputPath().$nameFile);
       }
-      return $current;
-    }
-
-    private function convertebleList($current) {
-      $removeList = require(__DIR__ . '/../helps/ListMappingAttributes.php');
-      foreach ($removeList as $key => $value) {
-        $current = str_replace($key, $value, $current);
-      }
-      return $current;
     }
 
 
-    /**
-     * Converts XML document to array.
-     * @param string|\SimpleXMLElement $xml xml to process.
-     * @return array XML array representation.
-     */
-    protected function convertXmlToArray($xml)
-    {
-        if (is_string($xml)) {
-            $xml = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-        }
-        $result = (array) $xml;
-        foreach ($result as $key => $value) {
-            if (!is_scalar($value)) {
-                $result[$key] = $this->convertXmlToArray($value);
-            }
-        }
-        return $result;
+    public function actionMovefile(){
+      echo $nameFile;
     }
 
 }
