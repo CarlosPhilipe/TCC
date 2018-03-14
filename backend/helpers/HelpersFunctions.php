@@ -54,9 +54,9 @@ class HelpersFunctions {
 
   public static function verifyIfNameIsNativeType($name) {
     $CCAlphabet = require(__DIR__.'/ListMappingTypesOfDB.php');
-    var_dump($CCAlphabet);
+    // var_dump($CCAlphabet);
     $name = strtolower($name);
-    echo $name;
+    // echo $name;
 
     return array_key_exists($name, $CCAlphabet);
   }

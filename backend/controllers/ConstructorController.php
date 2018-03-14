@@ -34,7 +34,7 @@ class ConstructorController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'form', 'reader', 'movefile'],
+                        'actions' => ['logout', 'index', 'form', 'reader', 'movefile', 'pre-render', 'pos-render'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -69,6 +69,20 @@ class ConstructorController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    public function actionPreRender()
+    {
+
+
+        return $this->render('pre-render', ['model' => true]);
+    }
+
+    public function actionPosRender()
+    {
+
+
+        return $this->render('pos-render', ['model' => true]);
     }
 
 
@@ -109,9 +123,11 @@ class ConstructorController extends Controller
       foreach ($classes as $classeItem) {
         ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
       }
-      echo "<pre>";
+
       $classes = $mappingObject->getStructureClasses();
       GeneratorMigrate::generateMigrations($classes);
+
+      return Yii::$app->response->redirect("index.php?r=constructor/pos-render");
     }
 
 

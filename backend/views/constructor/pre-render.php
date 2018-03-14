@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
@@ -9,9 +8,10 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Bem vindo ao construtor!</h1>
+        <h1>Pré render</h1>
 
-        <?= Html::a('Vamos começar?.', ['constructor/pre-render'], ['class' => 'profile-link']) ?>
+        <p class="lead">Carrege o conteúdo xml.</p>
+        <?= Html::a('Continuar.', ['constructor/reader'], ['class' => 'profile-link']) ?>
 
     </div>
 
