@@ -29,6 +29,7 @@ class HelpersFunctions {
 
   public static function mapAttributesOfBD($name) {
     $CCAlphabet = require(__DIR__.'/ListMappingTypesOfDB.php');
+    $name = strtolower($name);
     if ( array_key_exists("{$name}", $CCAlphabet) ) {
         return $CCAlphabet["{$name}"];
     }
@@ -49,5 +50,14 @@ class HelpersFunctions {
       $current = str_replace($key, $value, $current);
     }
     return $current;
+  }
+
+  public static function verifyIfNameIsNativeType($name) {
+    $CCAlphabet = require(__DIR__.'/ListMappingTypesOfDB.php');
+    var_dump($CCAlphabet);
+    $name = strtolower($name);
+    echo $name;
+
+    return array_key_exists($name, $CCAlphabet);
   }
 }

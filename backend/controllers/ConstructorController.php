@@ -110,14 +110,8 @@ class ConstructorController extends Controller
         ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
       }
       echo "<pre>";
-      $lc = $mappingObject->getStructureClasses();
-
-      foreach ($lc as $key => $value) {
-        $nameFile = GeneratorMigrate::createMigration('create_table',$value['name']);
-        GeneratorMigrate::setClassName($nameFile, GeneratorMigrate::getOutputPath().$nameFile);
-        GeneratorMigrate::setTableName($value['name'], GeneratorMigrate::getOutputPath().$nameFile);
-        GeneratorMigrate::setContent($value, GeneratorMigrate::getOutputPath().$nameFile);
-      }
+      $classes = $mappingObject->getStructureClasses();
+      GeneratorMigrate::generateMigrations($classes);
     }
 
 
