@@ -3,6 +3,7 @@ namespace backend\models;
 
 use Object;
 use backend\models\ListType;
+use Exception;
 
 class MappingObject {
 
@@ -15,6 +16,9 @@ class MappingObject {
   public function getClassName() {
      $classKeys = [];
      $it = $this->xmlObject->content->Model->namespaceOwnedElement->Class;
+     if (!$it) {
+       throw new Exception('Dont has Class Names getClassName');
+     }
      foreach ($it as $value) {
        $classKeys[] = $value->attributes()->name;
      }
@@ -33,6 +37,9 @@ class MappingObject {
   public function getNativeTypes() {
      $classes = [];
      $it = $this->xmlObject->content->Primitive;
+     if (!$it) {
+       throw new Exception('Dont has Native Types getNativeTypes');
+     }
      foreach ($it as $value) {
        $classes[] = $value;
      }

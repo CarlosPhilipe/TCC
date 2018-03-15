@@ -73,9 +73,18 @@ class ConstructorController extends Controller
 
     public function actionPreRender()
     {
+        $model = new UploadForm();
 
+        if (Yii::$app->request->isPost) {
+            $model->file = UploadedFile::getInstance($model, 'file');
 
-        return $this->render('pre-render', ['model' => true]);
+            if ($model->upload()) {
+                // $this->redirect(['pos-render']);
+                $this->actionReader();
+            }
+        }
+
+        return $this->render('pre-render', ['model' => $model]);
     }
 
     public function actionPosRender()
@@ -86,48 +95,34 @@ class ConstructorController extends Controller
     }
 
 
-    public function actionForm()
-    {
-        $model = new UploadForm();
-
-        if (Yii::$app->request->isPost) {
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if ($model->upload()) {
-                // file is uploaded successfully
-                return;
-            }
-        }
-
-        return $this->render('form', ['model' => $model]);
-    }
-
-
     public function actionReader()
     {
-      $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
-      // remove Prefixes desnecessary
-      $current = HelpersFunctions::removeList($current);
-      // convert key expressions
-      $current = HelpersFunctions::convertebleList($current);
+          $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
+          // remove Prefixes desnecessary
+          $current = HelpersFunctions::removeList($current);
+          // convert key expressions
+          $current = HelpersFunctions::convertebleList($current);
 
-      $xmlObject = new SimpleXMLElement($current);
-      $mappingObject = new MappingObject();
-      $mappingObject->setXmlObject($xmlObject);
+          $xmlObject = new SimpleXMLElement($current);
+          $mappingObject = new MappingObject();
 
-      $types = $mappingObject->getNativeTypes();
-      foreach ($types as $typeItem) {
-        ListType::setType( new Type($typeItem->attributes()->id, $typeItem->attributes()->name));
-      }
+          $mappingObject->setXmlObject($xmlObject);
 
-      $classes= $mappingObject->getClasses();
-      foreach ($classes as $classeItem) {
-        ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
-      }
+          $types = $mappingObject->getNativeTypes();
+          foreach ($types as $typeItem) {
+            ListType::setType( new Type($typeItem->attributes()->id, $typeItem->attributes()->name));
+          }
 
-      $classes = $mappingObject->getStructureClasses();
-      GeneratorMigrate::generateMigrations($classes);
+          $classes= $mappingObject->getClasses();
+          foreach ($classes as $classeItem) {
+            ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
+          }
 
-      return Yii::$app->response->redirect("index.php?r=constructor/pos-render");
+          $classes = $mappingObject->getStructureClasses();
+          GeneratorMigrate::generateMigrations($classes);
+
+          return $this->redirect(['pos-render']);
+
     }
 
 

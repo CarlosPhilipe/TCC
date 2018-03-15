@@ -9,7 +9,7 @@ class UploadForm extends Model
     /**
      * @var UploadedFile
      */
-    public  $imageFile;
+    public  $file;
 
     public static function getPath() {
         return __dir__ . '/../web/path-files/';
@@ -19,14 +19,14 @@ class UploadForm extends Model
     public function rules()
     {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, xml'],
+            [['file'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xml'],
         ];
     }
 
     public function upload()
     {
         if ($this->validate()) {
-            $this->imageFile->saveAs( UploadForm::getPath() . $this->imageFile->baseName . '.' . $this->imageFile->extension);
+            $this->file->saveAs( UploadForm::getPath() . 'doc.xml');
             return true;
         } else {
             return false;
