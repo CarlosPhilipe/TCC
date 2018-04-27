@@ -10,4 +10,10 @@ return [
     'StructuralFeature.type' => 'structuralFeatureType',
     'TaggedValue.modelElement' => 'taggedValueModelElement',
     'user.passwordResetTokenExpire' => 'userPasswordResetTokenExpire',
+
+    'AssociationEnd.participant' => 'associationEndParticipant',
+    'Association.connection' => 'associationConnection',
+    'StructuralFeature.multiplicity' => 'structuralFeatureMultiplicity',
+    'Multiplicity.range' => 'multiplicityRange',
+
 ];

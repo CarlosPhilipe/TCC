@@ -34,7 +34,7 @@ class ConstructorController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'form', 'reader', 'movefile', 'pre-render', 'pos-render'],
+                        'actions' => ['reader-tester', 'logout', 'index', 'form', 'reader', 'movefile', 'pre-render', 'pos-render'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -120,11 +120,44 @@ class ConstructorController extends Controller
 
           $classes = $mappingObject->getStructureClasses();
           GeneratorMigrate::generateMigrations($classes);
+          sleep(1);
+          $associations = $mappingObject->getConsolidedAssociations();
+          GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
           return $this->redirect(['pos-render']);
 
     }
 
+
+    public function actionReaderTester()
+    {
+          $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
+          // remove Prefixes desnecessary
+          $current = HelpersFunctions::removeList($current);
+          // convert key expressions
+          $current = HelpersFunctions::convertebleList($current);
+
+          $xmlObject = new SimpleXMLElement($current);
+          $mappingObject = new MappingObject();
+
+          $mappingObject->setXmlObject($xmlObject);
+
+          $types = $mappingObject->getNativeTypes();
+          foreach ($types as $typeItem) {
+            ListType::setType( new Type($typeItem->attributes()->id, $typeItem->attributes()->name));
+          }
+
+          $classes= $mappingObject->getClasses();
+          foreach ($classes as $classeItem) {
+            ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
+          }
+
+          $associations = $mappingObject->getConsolidedAssociations();
+          echo "<pre>";
+          var_dump($associations);
+          // var_dump($classes);
+
+    }
 
     public function actionMovefile(){
       echo $nameFile;

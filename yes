@@ -1,0 +1,7 @@
+Yii Migration Tool (based on Yii v2.0.12)
+
+Total 2 new migrations to be applied:
+	m180426_051123_carro
+	m180426_051123_proprietario
+
+Apply the above migrations? (yes|no) [no]:

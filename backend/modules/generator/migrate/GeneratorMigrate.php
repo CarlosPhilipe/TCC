@@ -9,6 +9,10 @@ class GeneratorMigrate {
     const CLASS_NAME = '{CLASS_NAME}';
     const CONTENT = '{CONTENT}';
     const TABLE_NAME = '{TABLE_NAME}';
+    const TAGET_TABLE_NAME = '{TAGET_TABLE_NAME}';
+    const ATTRIBUTE = '{ATTRIBUTE}';
+    const FK_NAME = '{FK_NAME}';
+
 
 
     public static function generateMigrations($classes) {
@@ -19,6 +23,17 @@ class GeneratorMigrate {
           GeneratorMigrate::setTableName($value['name'], GeneratorMigrate::getOutputPath().$nameFile);
           GeneratorMigrate::setContent($value, GeneratorMigrate::getOutputPath().$nameFile);
         }
+      }
+    }
+
+    public static function generateMigrationsForForeingKeys($associations) {
+      foreach ($associations as $key => $value) {
+          $nameFile = GeneratorMigrate::createMigration('add_foreing_key',$value['name']);
+          GeneratorMigrate::setClassName($nameFile, GeneratorMigrate::getOutputPath().$nameFile);
+          GeneratorMigrate::setTableName($value['mainClass'], GeneratorMigrate::getOutputPath().$nameFile);
+          GeneratorMigrate::setAttributeForeingKey($value['secondClass'], GeneratorMigrate::getOutputPath().$nameFile);
+          GeneratorMigrate::setFKName($value['secondClass'], GeneratorMigrate::getOutputPath().$nameFile);
+          GeneratorMigrate::setTargetClassName($value['secondClass'], GeneratorMigrate::getOutputPath().$nameFile);
       }
     }
 
@@ -50,6 +65,32 @@ class GeneratorMigrate {
         fclose($file);
     }
 
+    public static function setTargetClassName($targetClassName, $inputPath) {
+        $name = HelpersFunctions::formateNameCamelCaseToDown($targetClassName);
+        $text = implode('', file($inputPath.'.php'));
+        $text = str_replace(GeneratorMigrate::TAGET_TABLE_NAME, "'$name'", $text);
+        $file = fopen($inputPath.'.php', 'w');
+        fwrite($file, $text);
+        fclose($file);
+    }
+
+    public static function setAttributeForeingKey($className, $inputPath) {
+        $name = HelpersFunctions::formateNameCamelCaseToDown($className);
+        $text = implode('', file($inputPath.'.php'));
+        $text = str_replace(GeneratorMigrate::ATTRIBUTE, "'".$name."_id'", $text);
+        $file = fopen($inputPath.'.php', 'w');
+        fwrite($file, $text);
+        fclose($file);
+    }
+
+    public static function setFKName($className, $inputPath) {
+        $name = HelpersFunctions::formateNameCamelCaseToDown($className);
+        $text = implode('', file($inputPath.'.php'));
+        $text = str_replace(GeneratorMigrate::FK_NAME, "'fk-".$name."_id'", $text);
+        $file = fopen($inputPath.'.php', 'w');
+        fwrite($file, $text);
+        fclose($file);
+    }
 
     public static function setTableName($tableName, $inputPath) {
         $tableName = HelpersFunctions::formateNameCamelCaseToDown($tableName);
