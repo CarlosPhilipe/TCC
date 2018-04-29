@@ -3,11 +3,11 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m180427_194417_proprietario extends Migration
+class m180427_233542_fabricante extends Migration
 {
     public function up()
     {
-        $this->createTable('proprietario', [
+        $this->createTable('fabricante', [
             'id' => Schema::TYPE_PK,
             'nome' => $this->string(),
         ]);
@@ -15,6 +15,6 @@ class m180427_194417_proprietario extends Migration
 
     public function down()
     {
-        $this->dropTable('proprietario');
+        $this->dropTable('fabricante');
     }
 }

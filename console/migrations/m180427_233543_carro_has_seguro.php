@@ -2,21 +2,21 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m180427_194418_carro_belongs_fabricante extends Migration
+class m180427_233543_carro_has_seguro extends Migration
 {
     public function up()
     {
         // add foreign
         $this->addColumn(
-            'carro',
-            'fabricante_id',
+            'seguro',
+            'carro_id',
             $this->integer(11));
 
         $this->addForeignKey(
-            'fk-fabricante_id',
+            'fk-carro_id',
+            'seguro',
+            'carro_id',
             'carro',
-            'fabricante_id',
-            'fabricante',
             'id',
             'CASCADE',
             'CASCADE'
@@ -31,8 +31,8 @@ class m180427_194418_carro_belongs_fabricante extends Migration
     {
         // drops foreign
         $this->dropForeignKey(
-          'fk-fabricante_id',
-          'carro'
+          'fk-carro_id',
+          'seguro'
       );
     }
 }
