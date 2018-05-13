@@ -125,7 +125,9 @@ class ConstructorController extends Controller
           $associations = $mappingObject->getConsolidedAssociations();
           GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
-          shell_exec('cd ../../ && php yii migrate <yes.cmd');
+          $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
+
+          // var_dump($out);
 
           GeneratorCrud::generateModels($classes);
 
@@ -163,12 +165,12 @@ class ConstructorController extends Controller
           $associations = $mappingObject->getConsolidedAssociations();
           GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
-          shell_exec('cd ../../ && php yii migrate <yes.cmd');
+          $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
 
           // $out =
           echo "<pre>";
           GeneratorCrud::generateModels($classes);
-          // var_dump($out);
+          var_dump($out);
           // var_dump($classes);
 
     }

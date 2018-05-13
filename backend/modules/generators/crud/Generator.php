@@ -239,6 +239,10 @@ class Generator extends \yii\gii\Generator
             }
         }
         $column = $tableSchema->columns[$attribute];
+        preg_match('/\w*_id$/', $attribute, $matches, PREG_UNMATCHED_AS_NULL);
+        if ($column->phpType === 'integer' && $matches) {
+          return "\$form->field(\$model, '$attribute')->dropDownList(\$listOf$attribute, ['prompt' => ''])";
+        } else
         if ($column->phpType === 'boolean') {
             return "\$form->field(\$model, '$attribute')->checkbox()";
         } elseif ($column->type === 'text') {
@@ -547,5 +551,13 @@ class Generator extends \yii\gii\Generator
 
             return $model->attributes();
         }
+    }
+
+    public function getForeingKey(){
+      $generator->getColumnNames();
+      $tableSchema = $this->getTableSchema();
+
+      $column = $tableSchema->columns[$attribute];
+      preg_match('/\w*_id$/', $attribute, $matches, PREG_UNMATCHED_AS_NULL);
     }
 }

@@ -1,8 +1,6 @@
 <?php
 namespace backend\models;
 
-use Object;
-
 class Type {
     private $id;
     private $name;

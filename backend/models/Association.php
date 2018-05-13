@@ -1,8 +1,6 @@
 <?php
 namespace backend\models;
 
-use Object;
-
 class Association {
     private $id;
     private $name;

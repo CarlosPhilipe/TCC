@@ -17,6 +17,10 @@ if ($modelClass === $searchModelClass) {
     $searchModelAlias = $searchModelClass . 'Search';
 }
 
+$p = $generator->modelClass;
+
+var_dump($generator->getColumnNames());
+
 /* @var $class ActiveRecordInterface */
 $class = $generator->modelClass;
 $pks = $class::primaryKey();
