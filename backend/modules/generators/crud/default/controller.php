@@ -19,7 +19,6 @@ if ($modelClass === $searchModelClass) {
 
 $p = $generator->modelClass;
 
-var_dump($generator->getColumnNames());
 
 /* @var $class ActiveRecordInterface */
 $class = $generator->modelClass;
@@ -127,6 +126,11 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
+        <?php
+        foreach ($generator->getForeingKey() as $key => $foreingKey) {
+          echo "\$listOf$foreingKey = $key::find()->all();\n";
+        }
+        ?>
         $model = $this->findModel(<?= $actionParams ?>);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

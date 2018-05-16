@@ -60,4 +60,14 @@ class HelpersFunctions {
 
     return array_key_exists($name, $CCAlphabet);
   }
+
+  public static function convertToForeingKeyName($className) {
+      $name = HelpersFunctions::formateNameCamelCaseToDown($className);
+      return $name."_id";
+  }
+
+  public static function undoConvertToForeingKeyName($className) {
+      $name =  substr($className, 0, strlen($className)-3);
+      return HelpersFunctions::formateNameCamelCaseToUp($name);
+  }
 }

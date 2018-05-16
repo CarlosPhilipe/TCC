@@ -15,6 +15,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
+use backend\helpers\HelpersFunctions;
 
 /**
  * Generates CRUD
@@ -553,11 +554,20 @@ class Generator extends \yii\gii\Generator
         }
     }
 
-    public function getForeingKey(){
-      $generator->getColumnNames();
-      $tableSchema = $this->getTableSchema();
+    public function getForeingKey()
+    {
+      $attributes = $this->getColumnNames();
+      $matches = [];
+      foreach ($attributes as $attribute) {
+        preg_match('/\w*_id$/', $attribute, $matche, PREG_UNMATCHED_AS_NULL);
+        if ($matche) {
+          echo "$attribute\n";
+          $cn = HelpersFunctions::undoConvertToForeingKeyName($attribute);
+            echo strlen($attribute)."\n";
+          $matches[$cn] = $attribute;
+        }
+      }
 
-      $column = $tableSchema->columns[$attribute];
-      preg_match('/\w*_id$/', $attribute, $matches, PREG_UNMATCHED_AS_NULL);
+      return $matches;
     }
 }
