@@ -13,8 +13,6 @@ class GeneratorCrud {
     const ATTRIBUTE = '{ATTRIBUTE}';
     const FK_NAME = '{FK_NAME}';
 
-
-
     public static function generateModels($classes) {
       foreach ($classes as $key => $value) {
         if (!HelpersFunctions::verifyIfNameIsNativeType($value['name'])) {
@@ -29,5 +27,22 @@ class GeneratorCrud {
       }
       $out = shell_exec('mv ../../console/models/*.php ../../frontend/models/');
     }
+
+    public static function generateCRUD($classes) {
+      foreach ($classes as $key => $value) {
+        if (!HelpersFunctions::verifyIfNameIsNativeType($value['name'])) {
+           $tableName = HelpersFunctions::formateNameCamelCaseToDown($value['name']);
+           $cmd = "cd ../../ &&";
+           $cmd.= " php yii gii/crud";
+           $cmd.= " --modelClass='frontend\\models\\{$value['name']}'";
+           $cmd.= " --controllerClass='frontend\\controllers\\{$value['name']}Controller'";
+           $cmd.= " --template='myCrud'";;
+           $cmd.= " --viewPath='frontend\\views\\".str_replace('_', '-', $value['name'])."' <yes.cmd";
+           $out = shell_exec($cmd);
+        }
+      }
+      $out = shell_exec('mv ../../console/models/*.php ../../frontend/models/');
+    }
+    //./    --viewPath='frontend\views\carro' < yes.cmd
 
 }

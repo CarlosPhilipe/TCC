@@ -130,6 +130,7 @@ class ConstructorController extends Controller
           // var_dump($out);
 
           GeneratorCrud::generateModels($classes);
+          GeneratorCrud::generateCRUD($classes);
 
           return $this->redirect(['pos-render']);
 

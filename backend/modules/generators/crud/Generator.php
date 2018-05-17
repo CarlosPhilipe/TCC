@@ -240,7 +240,7 @@ class Generator extends \yii\gii\Generator
             }
         }
         $column = $tableSchema->columns[$attribute];
-        preg_match('/\w*_id$/', $attribute, $matches, PREG_UNMATCHED_AS_NULL);
+        preg_match('/\w*_id$/', $attribute, $matches);
         if ($column->phpType === 'integer' && $matches) {
           $fk = HelpersFunctions::formateNameCamelCaseToUp("_$attribute");
           return "\$form->field(\$model, '$attribute')->dropDownList(\$listOf$fk, ['prompt' => ''])";
@@ -560,7 +560,7 @@ class Generator extends \yii\gii\Generator
       $attributes = $this->getColumnNames();
       $matches = [];
       foreach ($attributes as $attribute) {
-        preg_match('/\w*_id$/', $attribute, $matche, PREG_UNMATCHED_AS_NULL);
+        preg_match('/\w*_id$/', $attribute, $matche);
         if ($matche) {
           $cn = HelpersFunctions::undoConvertToForeingKeyName($attribute);
 
