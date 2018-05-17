@@ -242,7 +242,8 @@ class Generator extends \yii\gii\Generator
         $column = $tableSchema->columns[$attribute];
         preg_match('/\w*_id$/', $attribute, $matches, PREG_UNMATCHED_AS_NULL);
         if ($column->phpType === 'integer' && $matches) {
-          return "\$form->field(\$model, '$attribute')->dropDownList(\$listOf$attribute, ['prompt' => ''])";
+          $fk = HelpersFunctions::formateNameCamelCaseToUp("_$attribute");
+          return "\$form->field(\$model, '$attribute')->dropDownList(\$listOf$fk, ['prompt' => ''])";
         } else
         if ($column->phpType === 'boolean') {
             return "\$form->field(\$model, '$attribute')->checkbox()";
@@ -561,9 +562,8 @@ class Generator extends \yii\gii\Generator
       foreach ($attributes as $attribute) {
         preg_match('/\w*_id$/', $attribute, $matche, PREG_UNMATCHED_AS_NULL);
         if ($matche) {
-          echo "$attribute\n";
           $cn = HelpersFunctions::undoConvertToForeingKeyName($attribute);
-            echo strlen($attribute)."\n";
+
           $matches[$cn] = $attribute;
         }
       }

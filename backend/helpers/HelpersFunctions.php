@@ -22,7 +22,7 @@ class HelpersFunctions {
   public static function formateNameCamelCaseToUp($name) {
     $CCAlphabet = require(__DIR__.'/CamelCaseHelper.php');
     foreach ($CCAlphabet as $key => $value) {
-      $CCAlphabet = str_replace($value, $key, $CCAlphabet);
+      $name = str_replace($value, $key, $name);
     }
     return $name;
   }

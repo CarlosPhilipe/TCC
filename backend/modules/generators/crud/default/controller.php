@@ -5,6 +5,7 @@
 
 use yii\db\ActiveRecordInterface;
 use yii\helpers\StringHelper;
+use backend\helpers\HelpersFunctions;
 
 
 /* @var $this yii\web\View */
@@ -42,6 +43,15 @@ use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+<?php
+foreach ($generator->getForeingKey() as $key => $foreingKey) {
+  $fk = HelpersFunctions::undoConvertToForeingKeyName($foreingKey);
+  $fk = HelpersFunctions::formateNameCamelCaseToUp("_$fk");
+  echo "use frontend\models\\$fk;\n";
+}
+
+?>
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
@@ -109,11 +119,26 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     {
         $model = new <?= $modelClass ?>();
 
+        <?php
+        foreach ($generator->getForeingKey() as $key => $foreingKey) {
+          $fk = HelpersFunctions::formateNameCamelCaseToUp("_$foreingKey");
+          $key = HelpersFunctions::formateNameCamelCaseToUp("_$key");
+          echo "\$listOf$fk = $key::find()->all();\n";
+          echo "\$listOf$fk = ArrayHelper::map(\$listOf$fk, 'id', 'id');\n";
+        }
+        ?>
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', <?= $urlParams ?>]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                <?php
+                foreach ($generator->getForeingKey() as $key => $foreingKey) {
+                  $fk = HelpersFunctions::formateNameCamelCaseToUp("_$foreingKey");
+                  echo "'listOf$fk' => \$listOf$fk,\n";
+                }
+                ?>
             ]);
         }
     }
@@ -126,18 +151,30 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
+        $model = $this->findModel(<?= $actionParams ?>);
+
         <?php
         foreach ($generator->getForeingKey() as $key => $foreingKey) {
-          echo "\$listOf$foreingKey = $key::find()->all();\n";
+          $fk = HelpersFunctions::formateNameCamelCaseToUp("_$foreingKey");
+
+          $key = HelpersFunctions::formateNameCamelCaseToUp("_$key");
+
+          echo "\$listOf$fk = $key::find()->all();\n";
+          echo "\$listOf$fk = ArrayHelper::map(\$listOf$fk, 'id', 'id');\n";
         }
         ?>
-        $model = $this->findModel(<?= $actionParams ?>);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', <?= $urlParams ?>]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                <?php
+                foreach ($generator->getForeingKey() as $key => $foreingKey) {
+                  $fk = HelpersFunctions::formateNameCamelCaseToUp("_$foreingKey");
+                  echo "'listOf$fk' => \$listOf$fk,\n";
+                }
+                ?>
             ]);
         }
     }

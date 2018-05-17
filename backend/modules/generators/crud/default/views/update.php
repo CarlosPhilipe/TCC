@@ -2,6 +2,8 @@
 
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
+use backend\helpers\HelpersFunctions;
+
 
 /* @var $this yii\web\View */
 /* @var $generator yii\gii\generators\crud\Generator */
@@ -27,6 +29,12 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 
     <?= "<?= " ?>$this->render('_form', [
         'model' => $model,
+        <?php
+        foreach ($generator->getForeingKey() as $key => $foreingKey) {
+          $fk = HelpersFunctions::formateNameCamelCaseToUp("_$foreingKey");
+          echo "'listOf$fk' => \$listOf$fk,\n";
+        }
+        ?>
     ]) ?>
 
 </div>
