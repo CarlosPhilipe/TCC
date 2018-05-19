@@ -1,7 +1,6 @@
 <?php
 namespace backend\models;
 
-use Object;
 use backend\models\ListType;
 use backend\models\Association;
 use Exception;

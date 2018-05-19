@@ -22,7 +22,7 @@ class HelpersFunctions {
   public static function formateNameCamelCaseToUp($name) {
     $CCAlphabet = require(__DIR__.'/CamelCaseHelper.php');
     foreach ($CCAlphabet as $key => $value) {
-      $CCAlphabet = str_replace($value, $key, $CCAlphabet);
+      $name = str_replace($value, $key, $name);
     }
     return $name;
   }
@@ -59,5 +59,15 @@ class HelpersFunctions {
     // echo $name;
 
     return array_key_exists($name, $CCAlphabet);
+  }
+
+  public static function convertToForeingKeyName($className) {
+      $name = HelpersFunctions::formateNameCamelCaseToDown($className);
+      return $name."_id";
+  }
+
+  public static function undoConvertToForeingKeyName($className) {
+      $name =  substr($className, 0, strlen($className)-3);
+      return HelpersFunctions::formateNameCamelCaseToUp($name);
   }
 }

@@ -7,6 +7,7 @@ use backend\models\MappingObject;
 use backend\models\Type;
 use backend\models\UploadForm;
 use backend\modules\generator\migrate\GeneratorMigrate;
+use backend\modules\generator\crud\GeneratorCrud;
 use common\models\LoginForm;
 use SimpleXMLElement;
 use Yii;
@@ -124,7 +125,12 @@ class ConstructorController extends Controller
           $associations = $mappingObject->getConsolidedAssociations();
           GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
-          shell_exec('cd ../../ && php yii migrate <teste');
+          $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
+
+          // var_dump($out);
+
+          GeneratorCrud::generateModels($classes);
+          GeneratorCrud::generateCRUD($classes);
 
           return $this->redirect(['pos-render']);
 
@@ -154,9 +160,17 @@ class ConstructorController extends Controller
             ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
           }
 
+          $classes = $mappingObject->getStructureClasses();
+          GeneratorMigrate::generateMigrations($classes);
+          sleep(1);
           $associations = $mappingObject->getConsolidedAssociations();
+          GeneratorMigrate::generateMigrationsForForeingKeys($associations);
+
+          $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
+
           // $out =
           echo "<pre>";
+          GeneratorCrud::generateModels($classes);
           var_dump($out);
           // var_dump($classes);
 

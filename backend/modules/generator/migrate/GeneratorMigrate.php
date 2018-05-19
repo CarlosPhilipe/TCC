@@ -75,18 +75,18 @@ class GeneratorMigrate {
     }
 
     public static function setAttributeForeingKey($className, $inputPath) {
-        $name = HelpersFunctions::formateNameCamelCaseToDown($className);
         $text = implode('', file($inputPath.'.php'));
-        $text = str_replace(GeneratorMigrate::ATTRIBUTE, "'".$name."_id'", $text);
+        $fkName = HelpersFunctions:: convertToForeingKeyName($className);
+        $text = str_replace(GeneratorMigrate::ATTRIBUTE, "'$fkName'", $text);
         $file = fopen($inputPath.'.php', 'w');
         fwrite($file, $text);
         fclose($file);
     }
 
     public static function setFKName($className, $inputPath) {
-        $name = HelpersFunctions::formateNameCamelCaseToDown($className);
         $text = implode('', file($inputPath.'.php'));
-        $text = str_replace(GeneratorMigrate::FK_NAME, "'fk-".$name."_id'", $text);
+        $fkName = HelpersFunctions:: convertToForeingKeyName($className);
+        $text = str_replace(GeneratorMigrate::FK_NAME, "'fk-$fkName'", $text);
         $file = fopen($inputPath.'.php', 'w');
         fwrite($file, $text);
         fclose($file);
