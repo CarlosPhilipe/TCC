@@ -34,6 +34,15 @@ class MappingObject {
      return $classes;
   }
 
+  public function getAssotiationClasses() {
+     $classes = [];
+     $it = $this->xmlObject->content->Model->namespaceOwnedElement->AssociationClass;
+     foreach ($it as $value) {
+       $classes[] = $value;
+     }
+     return $classes;
+  }
+
   public function getNativeTypes() {
      $classes = [];
      $it = $this->xmlObject->content->Primitive;
@@ -108,6 +117,38 @@ class MappingObject {
                       'mainCardinate' => $item->getUpperValue(),
                       'secondClass' => $item->getAssociateParticipant(),
                       'secondCardinate' => $association->getUpperValue()
+                    ];
+                  } else if ($association->getUpperValue() != -1 && $item->getUpperValue() ==  -1) {
+                    $consolidedAssociation = [
+                      'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
+                      'mainClass' => $item->getAssociateParticipant(),
+                      'mainCardinate' => $association->getUpperValue(),
+                      'secondClass' => $item->getAssociateOwner(),
+                      'secondCardinate' => $item->getUpperValue()
+                    ];
+                  } else if ($association->getUpperValue() == -1 && $item->getUpperValue() ==  -1) {
+                    $consolidedAssociation = [
+                      'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
+                      'mainClass' => $item->getAssociateParticipant(),
+                      'mainCardinate' => $association->getUpperValue(),
+                      'secondClass' => $item->getAssociateOwner(),
+                      'secondCardinate' => $item->getUpperValue()
+                    ];
+
+                    $consolidedAssociation = [
+                      'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
+                      'mainClass' => $item->getAssociateParticipant(),
+                      'mainCardinate' => $association->getUpperValue(),
+                      'secondClass' => $item->getAssociateOwner(),
+                      'secondCardinate' => $item->getUpperValue()
+                    ];
+
+                    $consolidedAssociation = [
+                      'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
+                      'mainClass' => $item->getAssociateParticipant(),
+                      'mainCardinate' => $association->getUpperValue(),
+                      'secondClass' => $item->getAssociateOwner(),
+                      'secondCardinate' => $item->getUpperValue()
                     ];
                   } else {
                     $consolidedAssociation = [

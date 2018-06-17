@@ -160,11 +160,14 @@ class ConstructorController extends Controller
         ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
       }
 
+      $classes = $mappingObject->getAssotiationClasses();
+      HelpersFunctions::dd($classes);
+
       $classes = $mappingObject->getStructureClasses();
-      GeneratorMigrate::generateMigrations($classes);
+      // GeneratorMigrate::generateMigrations($classes);
       sleep(1);
       $associations = $mappingObject->getConsolidedAssociations();
-      GeneratorMigrate::generateMigrationsForForeingKeys($associations);
+      // GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
       $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
 
@@ -173,7 +176,7 @@ class ConstructorController extends Controller
       // GeneratorCrud::generateModels($classes);
       // GeneratorCrud::generateCRUD($classes);
 
-      return $this->redirect(['pos-render']);
+      // return $this->redirect(['pos-render']);
 
     }
 
