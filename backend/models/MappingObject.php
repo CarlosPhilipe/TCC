@@ -56,12 +56,13 @@ class MappingObject {
          $sc['name'] = $value->attributes()->name;
          $sc['visibility'] = $value->modelElementVisibility->attributes()->value;
          $attributes = $value->classifierFeature->Attribute;
-
-         for ($i=0; $i < count($attributes); $i++) {
-           $attribute = $attributes[$i];
-           $sc['attributes'][$i]['name'] = $attribute->attributes()->name;
-           $sc['attributes'][$i]['type_id'] = $attribute->structuralFeatureType->Classifier->attributes()->idref;
-           $sc['attributes'][$i]['type'] = ListType::getType("{$attribute->structuralFeatureType->Classifier->attributes()->idref}")->getName();
+         if ($attributes) {
+           for ($i=0; $i < count($attributes); $i++) {
+             $attribute = $attributes[$i];
+             $sc['attributes'][$i]['name'] = $attribute->attributes()->name;
+             $sc['attributes'][$i]['type_id'] = $attribute->structuralFeatureType->Classifier->attributes()->idref;
+             $sc['attributes'][$i]['type'] = ListType::getType("{$attribute->structuralFeatureType->Classifier->attributes()->idref}")->getName();
+           }
          }
          $classes[] = $sc;
      }

@@ -129,8 +129,8 @@ class ConstructorController extends Controller
 
           // var_dump($out);
 
-          GeneratorCrud::generateModels($classes);
-          GeneratorCrud::generateCRUD($classes);
+          // GeneratorCrud::generateModels($classes);
+          // GeneratorCrud::generateCRUD($classes);
 
           return $this->redirect(['pos-render']);
 
@@ -139,40 +139,41 @@ class ConstructorController extends Controller
 
     public function actionReaderTester()
     {
-          $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
-          // remove Prefixes desnecessary
-          $current = HelpersFunctions::removeList($current);
-          // convert key expressions
-          $current = HelpersFunctions::convertebleList($current);
+      $current = implode('', file(UploadForm::getPath() . 'doc.xml'));
+      // remove Prefixes desnecessary
+      $current = HelpersFunctions::removeList($current);
+      // convert key expressions
+      $current = HelpersFunctions::convertebleList($current);
 
-          $xmlObject = new SimpleXMLElement($current);
-          $mappingObject = new MappingObject();
+      $xmlObject = new SimpleXMLElement($current);
+      $mappingObject = new MappingObject();
 
-          $mappingObject->setXmlObject($xmlObject);
+      $mappingObject->setXmlObject($xmlObject);
 
-          $types = $mappingObject->getNativeTypes();
-          foreach ($types as $typeItem) {
-            ListType::setType( new Type($typeItem->attributes()->id, $typeItem->attributes()->name));
-          }
+      $types = $mappingObject->getNativeTypes();
+      foreach ($types as $typeItem) {
+        ListType::setType( new Type($typeItem->attributes()->id, $typeItem->attributes()->name));
+      }
 
-          $classes= $mappingObject->getClasses();
-          foreach ($classes as $classeItem) {
-            ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
-          }
+      $classes= $mappingObject->getClasses();
+      foreach ($classes as $classeItem) {
+        ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
+      }
 
-          $classes = $mappingObject->getStructureClasses();
-          GeneratorMigrate::generateMigrations($classes);
-          sleep(1);
-          $associations = $mappingObject->getConsolidedAssociations();
-          GeneratorMigrate::generateMigrationsForForeingKeys($associations);
+      $classes = $mappingObject->getStructureClasses();
+      GeneratorMigrate::generateMigrations($classes);
+      sleep(1);
+      $associations = $mappingObject->getConsolidedAssociations();
+      GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
-          $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
+      $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
 
-          // $out =
-          echo "<pre>";
-          GeneratorCrud::generateModels($classes);
-          var_dump($out);
-          // var_dump($classes);
+      // var_dump($out);
+
+      // GeneratorCrud::generateModels($classes);
+      // GeneratorCrud::generateCRUD($classes);
+
+      return $this->redirect(['pos-render']);
 
     }
 
