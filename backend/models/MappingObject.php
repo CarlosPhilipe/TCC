@@ -3,6 +3,7 @@ namespace backend\models;
 
 use backend\models\ListType;
 use backend\models\Association;
+use backend\helpers\HelpersFunctions;
 use Exception;
 
 class MappingObject {
@@ -57,11 +58,13 @@ class MappingObject {
 
   public function getStructureClasses() {
      $it = $this->getClasses();
+     $it = array_merge($it, $this->getAssotiationClasses());
      $classes = [];
      $attributes = [];
 
      foreach ($it as $value) {
          $sc = [];
+         $sc['id'] = $value->attributes()->id;
          $sc['name'] = $value->attributes()->name;
          $sc['visibility'] = $value->modelElementVisibility->attributes()->value;
          $attributes = $value->classifierFeature->Attribute;
@@ -106,18 +109,22 @@ class MappingObject {
 
      foreach ($associations as $item) {
          if ($item->getNotUsed()) {
-           foreach ($associations as $association) {
-             if ($item->getAssociateOwner() == $association->getAssociateParticipant()
+            foreach ($associations as $association) {
+              if ($item->getAssociateOwner() == $association->getAssociateParticipant()
                 && $item->getAssociateParticipant() == $association->getAssociateOwner()
                 && $item->getNotUsed()) {
                   if ($association->getUpperValue() == -1 && $item->getUpperValue() !=  -1) {
-                    $consolidedAssociation = [
-                      'name' => $item->getAssociateOwner().'Belongs'.$item->getAssociateParticipant(),
-                      'mainClass' => $item->getAssociateOwner(),
-                      'mainCardinate' => $item->getUpperValue(),
-                      'secondClass' => $item->getAssociateParticipant(),
-                      'secondCardinate' => $association->getUpperValue()
-                    ];
+                       // um para N indo
+                        $consolidedAssociation = [
+                          'name' => $item->getAssociateOwner().'Belongs'.$item->getAssociateParticipant(),
+                          'mainClass' => $item->getAssociateOwner(),
+                          'mainCardinate' => $item->getUpperValue(),
+                          'secondClass' => $item->getAssociateParticipant(),
+                          'secondCardinate' => $association->getUpperValue()
+                        ];
+                        $item->setNotUsed(false);
+                        $association->setNotUsed(false);
+                        $associationsConsolided[] = $consolidedAssociation;
                   } else if ($association->getUpperValue() != -1 && $item->getUpperValue() ==  -1) {
                     $consolidedAssociation = [
                       'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
@@ -126,42 +133,85 @@ class MappingObject {
                       'secondClass' => $item->getAssociateOwner(),
                       'secondCardinate' => $item->getUpperValue()
                     ];
+                     // um para N voltando
+                    $item->setNotUsed(false);
+                    $association->setNotUsed(false);
+                    $associationsConsolided[] = $consolidedAssociation;
                   } else if ($association->getUpperValue() == -1 && $item->getUpperValue() ==  -1) {
-                    $consolidedAssociation = [
-                      'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
-                      'mainClass' => $item->getAssociateParticipant(),
-                      'mainCardinate' => $association->getUpperValue(),
-                      'secondClass' => $item->getAssociateOwner(),
-                      'secondCardinate' => $item->getUpperValue()
-                    ];
+                        $consolidedAssociation = [
+                          'name' => $item->getAssociateOwner().'Belongs'.$item->getAssociateParticipant(),
+                          'mainClass' => $item->getAssociateOwner(),
+                          'mainCardinate' => $item->getUpperValue(),
+                          'secondClass' => $item->getAssociateParticipant(),
+                          'secondCardinate' => $association->getUpperValue()
+                        ];
+                        $maybeClass = $this->isNotAssociationClass($consolidedAssociation);
+                        if (!$maybeClass) {
+                            $item->setNotUsed(false);
+                            $association->setNotUsed(false);
+                            $associationsConsolided[] = $consolidedAssociation;
+                            continue;
+                        }
+                        $consolidedAssociation = [
+                          'name' => $item->getAssociateOwner().'Belongs'.$maybeClass->attributes()->name,
+                          'mainClass' => $maybeClass->attributes()->name,
+                          'mainCardinate' => ( $association->getUpperValue() ? $association->getUpperValue() : 0),
+                          'secondClass' => $item->getAssociateOwner(),
+                          'secondCardinate' => ( $item->getUpperValue() ? $item->getUpperValue() : 0)
+                        ];
+                        $item->setNotUsed(false);
+                        $association->setNotUsed(false);
+                        $associationsConsolided[] = $consolidedAssociation;
 
-                    $consolidedAssociation = [
-                      'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
-                      'mainClass' => $item->getAssociateParticipant(),
-                      'mainCardinate' => $association->getUpperValue(),
-                      'secondClass' => $item->getAssociateOwner(),
-                      'secondCardinate' => $item->getUpperValue()
-                    ];
+                        $consolidedAssociation = [
+                          'name' => $item->getAssociateParticipant().'Belongs'.$maybeClass->attributes()->name,
+                          'mainClass' => $maybeClass->attributes()->name,
+                          'mainCardinate' => ($association->getUpperValue() ? $association->getUpperValue() : 0),
+                          'secondClass' => $item->getAssociateParticipant(),
+                          'secondCardinate' => ($item->getUpperValue() ? $item->getUpperValue() : 0)
+                        ];
+                        $item->setNotUsed(false);
+                        $association->setNotUsed(false);
+                        $associationsConsolided[] = $consolidedAssociation;
 
-                    $consolidedAssociation = [
-                      'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
-                      'mainClass' => $item->getAssociateParticipant(),
-                      'mainCardinate' => $association->getUpperValue(),
-                      'secondClass' => $item->getAssociateOwner(),
-                      'secondCardinate' => $item->getUpperValue()
-                    ];
                   } else {
                     $consolidedAssociation = [
-                      'name' => $item->getAssociateOwner().'Has'.$item->getAssociateParticipant(),
-                      'mainClass' => $item->getAssociateParticipant(),
-                      'mainCardinate' => $association->getUpperValue(),
-                      'secondClass' => $item->getAssociateOwner(),
-                      'secondCardinate' => $item->getUpperValue()
+                      'name' => $item->getAssociateOwner().'Belongs'.$item->getAssociateParticipant(),
+                      'mainClass' => $item->getAssociateOwner(),
+                      'mainCardinate' => $item->getUpperValue(),
+                      'secondClass' => $item->getAssociateParticipant(),
+                      'secondCardinate' => $association->getUpperValue()
                     ];
+                    $maybeClass = $this->isNotAssociationClass($consolidedAssociation);
+                    if (!$maybeClass) {
+                        $item->setNotUsed(false);
+                        $association->setNotUsed(false);
+                        $associationsConsolided[] = $consolidedAssociation;
+                        continue;
+                    }
+                    $consolidedAssociation = [
+                      'name' => $item->getAssociateOwner().'Belongs'.$maybeClass->attributes()->name,
+                      'mainClass' => $maybeClass->attributes()->name,
+                      'mainCardinate' => ( $association->getUpperValue() ? $association->getUpperValue() : 0),
+                      'secondClass' => $item->getAssociateOwner(),
+                      'secondCardinate' => ( $item->getUpperValue() ? $item->getUpperValue() : 0)
+                    ];
+                    $item->setNotUsed(false);
+                    $association->setNotUsed(false);
+                    $associationsConsolided[] = $consolidedAssociation;
+
+                    $consolidedAssociation = [
+                      'name' => $item->getAssociateParticipant().'Belongs'.$maybeClass->attributes()->name,
+                      'mainClass' => $maybeClass->attributes()->name,
+                      'mainCardinate' => ($association->getUpperValue() ? $association->getUpperValue() : 0),
+                      'secondClass' => $item->getAssociateParticipant(),
+                      'secondCardinate' => ($item->getUpperValue() ? $item->getUpperValue() : 0)
+                    ];
+                    $item->setNotUsed(false);
+                    $association->setNotUsed(false);
+                    $associationsConsolided[] = $consolidedAssociation;
+
                   }
-                  $item->setNotUsed(false);
-                  $association->setNotUsed(false);
-                  $associationsConsolided[] = $consolidedAssociation;
                  }
            }
          }
@@ -170,6 +220,21 @@ class MappingObject {
      return $associationsConsolided;
   }
 
+  public function isNotAssociationClass($consolidedAssociation) {
+    $associationClasses = $this->getAssotiationClasses();
+    foreach ($associationClasses as $associationClass) {
+      $associationEnds = $associationClass->associationConnection->AssociationEnd;
+      foreach ($associationEnds as $associationEnd) {
+        $fo =  ListType::getType($associationEnd->featureOwner->Classifier->attributes()->idref);
+        $aep =  ListType::getType($associationEnd->associationEndParticipant->Classifier->attributes()->idref);
+        if ($fo->getName() == $consolidedAssociation['mainClass']
+            && $aep->getName() == $consolidedAssociation['secondClass'] ) {
+            return $associationClass;
+        }
+      }
+    }
+    return null;
+  }
 
   // gettes e settes
 

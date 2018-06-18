@@ -123,14 +123,13 @@ class ConstructorController extends Controller
           GeneratorMigrate::generateMigrations($classes);
           sleep(1);
           $associations = $mappingObject->getConsolidedAssociations();
+          // HelpersFunctions::dd($associations);
           GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
           $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
 
-          // var_dump($out);
-
-          // GeneratorCrud::generateModels($classes);
-          // GeneratorCrud::generateCRUD($classes);
+          GeneratorCrud::generateModels($classes);
+          GeneratorCrud::generateCRUD($classes);
 
           return $this->redirect(['pos-render']);
 
@@ -160,23 +159,17 @@ class ConstructorController extends Controller
         ListType::setType( new Type($classeItem->attributes()->id, $classeItem->attributes()['name']));
       }
 
-      $classes = $mappingObject->getAssotiationClasses();
-      HelpersFunctions::dd($classes);
-
       $classes = $mappingObject->getStructureClasses();
-      // GeneratorMigrate::generateMigrations($classes);
+      GeneratorMigrate::generateMigrations($classes);
       sleep(1);
       $associations = $mappingObject->getConsolidedAssociations();
-      // GeneratorMigrate::generateMigrationsForForeingKeys($associations);
+      // HelpersFunctions::dd($associations);
+      GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
       $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
 
-      // var_dump($out);
-
-      // GeneratorCrud::generateModels($classes);
-      // GeneratorCrud::generateCRUD($classes);
-
-      // return $this->redirect(['pos-render']);
+      GeneratorCrud::generateModels($classes);
+      GeneratorCrud::generateCRUD($classes);
 
     }
 
