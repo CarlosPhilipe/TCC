@@ -8,6 +8,7 @@ use backend\models\Type;
 use backend\models\UploadForm;
 use backend\modules\generator\migrate\GeneratorMigrate;
 use backend\modules\generator\crud\GeneratorCrud;
+use backend\modules\generator\menu\GeneratorMenu;
 use common\models\LoginForm;
 use SimpleXMLElement;
 use Yii;
@@ -130,6 +131,7 @@ class ConstructorController extends Controller
 
           GeneratorCrud::generateModels($classes);
           GeneratorCrud::generateCRUD($classes);
+          GeneratorMenu::generateMenus($classes);
 
           return $this->redirect(['pos-render']);
 
@@ -160,16 +162,30 @@ class ConstructorController extends Controller
       }
 
       $classes = $mappingObject->getStructureClasses();
-      GeneratorMigrate::generateMigrations($classes);
+      // GeneratorMigrate::generateMigrations($classes);
       sleep(1);
       $associations = $mappingObject->getConsolidedAssociations();
       // HelpersFunctions::dd($associations);
-      GeneratorMigrate::generateMigrationsForForeingKeys($associations);
+      // GeneratorMigrate::generateMigrationsForForeingKeys($associations);
 
       $out = shell_exec('cd ../../ && php yii migrate <yes.cmd');
 
-      GeneratorCrud::generateModels($classes);
-      GeneratorCrud::generateCRUD($classes);
+
+      foreach ($classes as $key => $value) {
+        if (!HelpersFunctions::verifyIfNameIsNativeType($value['name'])) {
+           $tableName = HelpersFunctions::formateNameCamelCaseToDown($value['name']);
+           echo "$tableName<br>";
+           // $cmd = "cd ../../ &&";
+           // $cmd.= " php yii gii/crud";
+           // $cmd.= " --modelClass='frontend\\models\\{$value['name']}'";
+           // $cmd.= " --controllerClass='frontend\\controllers\\{$value['name']}Controller'";
+           // $cmd.= " --template='myCrud'";;
+           // $cmd.= " --viewPath='frontend\\views\\".str_replace('_', '-', $value['name'])."' <yes.cmd";
+           // $out = shell_exec($cmd);
+        }
+      }
+      // GeneratorCrud::generateModels($classes);
+      // GeneratorCrud::generateCRUD($classes);
 
     }
 
