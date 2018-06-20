@@ -32,7 +32,7 @@ class GeneratorMigrate {
           GeneratorMigrate::setClassName($nameFile, GeneratorMigrate::getOutputPath().$nameFile);
           GeneratorMigrate::setTableName($value['mainClass'], GeneratorMigrate::getOutputPath().$nameFile);
           GeneratorMigrate::setAttributeForeingKey($value['secondClass'], GeneratorMigrate::getOutputPath().$nameFile);
-          GeneratorMigrate::setFKName($value['secondClass'], GeneratorMigrate::getOutputPath().$nameFile);
+          GeneratorMigrate::setFKName($value['secondClass'],$value['mainClass'], GeneratorMigrate::getOutputPath().$nameFile);
           GeneratorMigrate::setTargetClassName($value['secondClass'], GeneratorMigrate::getOutputPath().$nameFile);
       }
     }
@@ -83,10 +83,11 @@ class GeneratorMigrate {
         fclose($file);
     }
 
-    public static function setFKName($className, $inputPath) {
+    public static function setFKName($className, $targetClass, $inputPath) {
         $text = implode('', file($inputPath.'.php'));
         $fkName = HelpersFunctions:: convertToForeingKeyName($className);
-        $text = str_replace(GeneratorMigrate::FK_NAME, "'fk-$fkName'", $text);
+        $targetClass = HelpersFunctions:: convertToForeingKeyName($targetClass);
+        $text = str_replace(GeneratorMigrate::FK_NAME, "'fk_{$fkName}_in_{$targetClass}'", $text);
         $file = fopen($inputPath.'.php', 'w');
         fwrite($file, $text);
         fclose($file);
