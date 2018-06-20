@@ -9,13 +9,14 @@ class Association {
     private $upperValue;
     private $lowerValue;
     private $notUsed;
-
+    private $isAssociationClass;
 
     function __construct($id = '', $name = '', $isNative = true){
       $this->id = $id;
       $this->name = $name;
       $this->isNative = $isNative;
       $this->notUsed = true;
+      $this->isAssociationClass = false;
     }
 
     //setters
@@ -47,6 +48,10 @@ class Association {
       $this->notUsed = $notUsed;
     }
 
+    public function setIsAssociationClass($isAssociationClass) {
+      $this->isAssociationClass = $isAssociationClass;
+    }
+
     //getters
     public function getId() {
       return $this->id;
@@ -74,5 +79,9 @@ class Association {
 
     public function getNotUsed() {
       return $this->notUsed;
+    }
+
+    public function getIsAssociationClass() {
+      return $this->isAssociationClass;
     }
 }

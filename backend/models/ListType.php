@@ -6,7 +6,7 @@ class ListType {
     static $listTypes;
 
     public static function getType($id) {
-       return self::$listTypes[$id];
+       return self::$listTypes["{$id}"];
     }
 
     public static function setType($type) {

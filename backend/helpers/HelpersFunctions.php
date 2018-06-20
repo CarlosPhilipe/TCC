@@ -57,7 +57,6 @@ class HelpersFunctions {
     // var_dump($CCAlphabet);
     $name = strtolower($name);
     // echo $name;
-
     return array_key_exists($name, $CCAlphabet);
   }
 
