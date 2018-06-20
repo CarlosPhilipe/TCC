@@ -37,7 +37,7 @@ class GeneratorCrud {
            $cmd.= " --modelClass='frontend\\models\\{$value['name']}'";
            $cmd.= " --controllerClass='frontend\\controllers\\{$value['name']}Controller'";
            $cmd.= " --template='myCrud'";;
-           $cmd.= " --viewPath='frontend\\views\\".str_replace('_', '-', $value['name'])."' <yes.cmd";
+           $cmd.= " --viewPath='frontend\\views\\".str_replace('_', '-', $tableName)."' <yes.cmd";
            $out = shell_exec($cmd);
         }
       }
