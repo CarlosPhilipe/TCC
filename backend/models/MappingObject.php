@@ -47,9 +47,7 @@ class MappingObject {
   public function getNativeTypes() {
      $classes = [];
      $it = $this->xmlObject->content->Primitive;
-     if (!$it) {
-       throw new Exception('Dont has Native Types getNativeTypes');
-     }
+     
      foreach ($it as $value) {
        $classes[] = $value;
      }
